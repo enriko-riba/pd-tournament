@@ -11,7 +11,8 @@ var arena = new Arena(
         new NiceGuyStrategy(),
         new TitForTatStrategy(),
         new PushOverStrategy(),
-        new TricksterStrategy()
+        new TricksterStrategy(),
+        new GrimTriggerStrategy(),
     ]);
 
 var matches = arena.RunAll();
@@ -54,7 +55,7 @@ foreach(var (strategy, score) in rankList)
 {
     var numberOfMatches = matches.Count(m => m.StrategyA == strategy) +  matches.Count(m => m.StrategyB == strategy);
     var scoreString = FormatScore(score, totalMaxPoints);
-    const int N = 10;
+    const int N = 14;
     var nameString = $"{rank++,3}. {strategy.Name[..(strategy.Name.Length < N ? strategy.Name.Length : N)]}, {numberOfMatches} matches".PadRight(30);
     Console.ForegroundColor = strategy.Character == Character.Nice ? ConsoleColor.Green : ConsoleColor.Red;
     Console.WriteLine($"{nameString}: {scoreString}");

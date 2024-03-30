@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34707.107
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pd-tournament", "pd-tournament\pd-tournament.csproj", "{8529BAB3-A364-4EF7-8E52-BB52644F784E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pd-tournament", "pd-tournament\pd-tournament.csproj", "{8529BAB3-A364-4EF7-8E52-BB52644F784E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pd-base", "pd-base\pd-base.csproj", "{76FF9511-836E-41E3-8077-C2973CC69BE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pd-base", "pd-base\pd-base.csproj", "{76FF9511-836E-41E3-8077-C2973CC69BE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "strategies", "strategies\strategies.csproj", "{EB9C09DD-F1BA-43B0-982E-203F300D3C22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "strategies", "strategies\strategies.csproj", "{EB9C09DD-F1BA-43B0-982E-203F300D3C22}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A34C9CB-AC48-4238-A9B1-85F95777E032}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
