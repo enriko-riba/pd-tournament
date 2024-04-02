@@ -3,35 +3,47 @@ using System.Collections.Concurrent;
 
 namespace pd_tournament;
 
-public class Arena(int numberOfTurns, int turnNumberVariation, IEnumerable<IStrategy> strategies)
+/// <summary>
+/// Helper class to simulate a tournament between a set of strategies with the given number of rounds per match.
+/// </summary>
+/// <param name="baseNumberOfTurns">Approximate number of turns per match</param>
+/// <param name="turnNumberVariationPercentage">variation percentage in range [0,1]. Variations are necessary so 
+/// that the real number of turns stays unknown to strategies - knowing the exact number of turns would allow for
+/// special endgame strategies causing only defections to be optimal</param>
+/// <param name="strategies">competing strategies</param>
+public class Arena(int baseNumberOfTurns, double turnNumberVariationPercentage, IEnumerable<IStrategy> strategies)
 {
+    /// <summary>
+    /// Runs all tournament simulations where each strategy plays against all other strategies and itself.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<Match> RunAll()
     {
         var results = new ConcurrentBag<Match>();
         var totalStrategies = strategies.Count();
-
-        var turns = numberOfTurns + new Random().Next(-turnNumberVariation, turnNumberVariation);
+        var variation = (int)(baseNumberOfTurns * turnNumberVariationPercentage);
+        var numberOfTurns = baseNumberOfTurns + new Random().Next(-variation, variation);
         Parallel.For(0, totalStrategies, i =>
         {
             Parallel.For(i, totalStrategies, j =>
             {
                 var strategyA = strategies.ElementAt(i);
                 var strategyB = strategies.ElementAt(j);
-                var result = RunMatch(turns, strategyA, strategyB);
+                var result = RunMatch(numberOfTurns, strategyA, strategyB);
                 results.Add(result);
             });
         });
         return results;
     }
 
-    private static Match RunMatch(int turns, IStrategy strategyA, IStrategy strategyB)
+    private static Match RunMatch(int numberOfTurns, IStrategy strategyA, IStrategy strategyB)
     {
         strategyA.Character ??= Character.Nice;
         strategyB.Character ??= Character.Nice;
         var hasDefected = false;
 
-        var turnResults = new TurnResult[turns];
-        for (int turn = 0; turn < turns; turn++)
+        var turnResults = new TurnResult[numberOfTurns];
+        for (int turn = 0; turn < numberOfTurns; turn++)
         {
             var responseA = strategyA.MakeDecision(turn, turnResults.AsSpan(0, turn), Player.A);
             var responseB = strategyB.MakeDecision(turn, turnResults.AsSpan(0, turn), Player.B);

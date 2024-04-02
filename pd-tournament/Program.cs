@@ -4,7 +4,8 @@ using pd_tournament;
 using strategies;
 
 var arena = new Arena(
-    10000, 125,
+    10000,  // base number of turns per match
+    0.25,   // variation in number of turns per match (25%)
     [
         new BullyStrategy(),
         new RandomStrategy(),
@@ -48,6 +49,7 @@ foreach (var match in matches.OrderBy(x => x.StrategyA.Name).ThenBy(x => x.Strat
 
 Console.WriteLine(new string('=', 80));
 
+const int NameMaxLength = 14;
 var totalMaxPoints = maxPoints * matches.Count();
 var rankList = ranking.OrderByDescending(kvp => kvp.Value);
 var rank = 1;
@@ -55,12 +57,11 @@ foreach(var (strategy, score) in rankList)
 {
     var numberOfMatches = matches.Count(m => m.StrategyA == strategy) +  matches.Count(m => m.StrategyB == strategy);
     var scoreString = FormatScore(score, totalMaxPoints);
-    const int N = 14;
-    var nameString = $"{rank++,3}. {strategy.Name[..(strategy.Name.Length < N ? strategy.Name.Length : N)]}, {numberOfMatches} matches".PadRight(30);
+    var nameString = $"{rank++,3}. {strategy.Name[..(strategy.Name.Length < NameMaxLength ? strategy.Name.Length : NameMaxLength)]}, {numberOfMatches} matches".PadRight(30);
     Console.ForegroundColor = strategy.Character == Character.Nice ? ConsoleColor.Green : ConsoleColor.Red;
     Console.WriteLine($"{nameString}: {scoreString}");
-    Console.ForegroundColor = ConsoleColor.White;
 }
+Console.ForegroundColor = ConsoleColor.White;
 Console.WriteLine(new string('=', 80));
 
 static string FormatScore(int score, int maxPoints) => $"{score,6} ({(100.0 * score / maxPoints),6:N2}%)";

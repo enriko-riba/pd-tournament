@@ -24,15 +24,15 @@ strategies and against itself.
 - The PD and this simulation is a perfect information game meaning that all information is available to 
 players. Each strategy knows all previous turns of the current game.
 - On each turn both strategies present their decission without knowing the opponents current turn decission. 
-The strategy can choose to either defect or cooperate
+The strategy can choose to either defect or cooperate.
 - The strategies are evaluated based on the total points they have accumulated during the simulation and are 
-- ranked based on the total points they have accumulated.
+ranked based on the total points they have accumulated.
 
 
 ## Strategy traits
 One of the main characteristics of a strategy is being `nice` or `nasty`. 
 Nice strategies never defect first, while nasty strategies always defect first when playing against nice strategies.
 The strategy's character is calculated by the simulator, based on the strategy's decisions. Nice strategies are 
-colored green, while nasty strategies are colored red. 
+colored green, while nasty strategies are colored red.
 
 
